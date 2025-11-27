@@ -1,13 +1,15 @@
-package com.example.demo.model.mysql;
+package com.example.demo.model.mongo;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+
+@Document(collection = "usuarios")
+
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String usuario;
     private String contrasena;
@@ -16,11 +18,11 @@ public class Usuario {
     private boolean activo;
 
     // Getters y Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,5 +66,4 @@ public class Usuario {
         this.activo = activo;
     }
 
-    
 }

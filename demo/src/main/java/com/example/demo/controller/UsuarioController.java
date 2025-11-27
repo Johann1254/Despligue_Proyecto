@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.mysql.Usuario;
+import com.example.demo.model.mongo.Usuario;
 import com.example.demo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class UsuarioController {
 
     // 🔹 Obtener usuario por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Long id) {
+    public ResponseEntity<Usuario> obtenerUsuario(@PathVariable String id) {
         Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(id);
         return usuarioOpt.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -47,14 +47,14 @@ public class UsuarioController {
 
     // 🔹 Actualizar usuario existente
     @PutMapping("/{id}")
-    public Usuario actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public Usuario actualizarUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
         usuario.setId(id);
         return usuarioService.actualizarUsuario(usuario, id);
     }
 
     // 🔹 Eliminar usuario
     @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable Long id) {
+    public void eliminarUsuario(@PathVariable String id) {
         usuarioService.eliminarUsuario(id);
     }
 }

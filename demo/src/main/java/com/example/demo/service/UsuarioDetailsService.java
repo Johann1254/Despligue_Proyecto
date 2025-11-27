@@ -8,8 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.mysql.Usuario;
-import com.example.demo.repos.mysql.UsuarioRepository;
+import com.example.demo.model.mongo.Usuario;
+import com.example.demo.repos.mongo.UsuarioRepository;
 
 @Service
 public class UsuarioDetailsService implements UserDetailsService {

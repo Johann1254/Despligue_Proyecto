@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.model.mysql.Usuario;
+import com.example.demo.model.mongo.Usuario;
 import com.example.demo.service.UsuarioService;
 
 @Controller
@@ -31,7 +31,7 @@ public class UsuarioVistaController {
 
     // 🔹 Vista para editar un usuario existente
     @GetMapping("/usuarios/editar")
-    public String editarUsuarioPorParam(@RequestParam("id") Long id, Model model) {
+    public String editarUsuarioPorParam(@RequestParam("id") String id, Model model) {
         try {
             Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(id);
 

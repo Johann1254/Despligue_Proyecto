@@ -1,12 +1,14 @@
-package com.example.demo.repos.mysql;
+package com.example.demo.repos.mongo;
 
 import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import com.example.demo.model.mysql.Usuario;
+
+import com.example.demo.model.mongo.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends MongoRepository <Usuario, String> {
     Optional<Usuario> findByUsuario(String usuario);
 
     boolean existsByUsuario(String adminUsuario);

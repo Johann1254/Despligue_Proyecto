@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.mysql.Usuario;
-import com.example.demo.repos.mysql.UsuarioRepository;
+import com.example.demo.model.mongo.Usuario;
+import com.example.demo.repos.mongo.UsuarioRepository;
+
+import jakarta.annotation.PostConstruct;
 
 // import jakarta.annotation.PostConstruct;
 
@@ -40,9 +42,9 @@ public class UsuarioService {
     }
 
     // Actualizar existente
-    public Usuario actualizarUsuario(Usuario usuario, Long id) {
+    public Usuario actualizarUsuario(Usuario usuario, String id) {
 
-        Usuario existente = usuarioRepository.findById(usuario.getId()).orElseThrow();
+        Usuario existente = usuarioRepository.findById(id).orElseThrow();
 
         if (usuario.getId() == null) {
             throw new IllegalArgumentException("El ID del usuario es obligatorio");
@@ -74,54 +76,51 @@ public class UsuarioService {
     }
 
     // Obtener por ID
-    public Optional<Usuario> obtenerPorId(Long id) {
+    public Optional<Usuario> obtenerPorId(String id) {
         return usuarioRepository.findById(id);
     }
 
     // Eliminar
-    public void eliminarUsuario(Long id) {
+    public void eliminarUsuario(String id) {
         usuarioRepository.deleteById(id);
     }
 
-    // @PostConstruct
-    // public void init() {
+    @PostConstruct
+    public void init() {
 
-    // crearUsuarioSiNoExiste(
-    // "admin",
-    // "123",
-    // "admin@correo.com",
-    // "ADMIN",
-    // true
-    // );
+        crearUsuarioSiNoExiste(
+                "admin",
+                "123",
+                "admin@correo.com",
+                "ADMIN",
+                true);
 
-    // crearUsuarioSiNoExiste(
-    // "usuario",
-    // "usuario123",
-    // "user@correo.com",
-    // "USER",
-    // true
-    // );
-    // }
+        crearUsuarioSiNoExiste(
+                "usuario",
+                "usuario123",
+                "user@correo.com",
+                "USER",
+                true);
+    }
 
-    // private void crearUsuarioSiNoExiste(String user, String pass, String correo,
-    // String rol, boolean activo) {
+    private void crearUsuarioSiNoExiste(String user, String pass, String correo,
+            String rol, boolean activo) {
 
-    // usuarioRepository.findByUsuario(user).ifPresentOrElse(
-    // u -> {
-    // System.out.println("El usuario '" + user + "' ya existe.");
-    // },
-    // () -> {
-    // Usuario nuevo = new Usuario();
-    // nuevo.setUsuario(user);
-    // nuevo.setContrasena(passwordEncoder.encode(pass));
-    // nuevo.setCorreo(correo);
-    // nuevo.setRol(rol);
-    // nuevo.setActivo(activo);
+        usuarioRepository.findByUsuario(user).ifPresentOrElse(
+                u -> {
+                    System.out.println("El usuario '" + user + "' ya existe.");
+                },
+                () -> {
+                    Usuario nuevo = new Usuario();
+                    nuevo.setUsuario(user);
+                    nuevo.setContrasena(passwordEncoder.encode(pass));
+                    nuevo.setCorreo(correo);
+                    nuevo.setRol(rol);
+                    nuevo.setActivo(activo);
 
-    // usuarioRepository.save(nuevo);
-    // System.out.println("Usuario creado: " + user);
-    // }
-    // );
-    // }
+                    usuarioRepository.save(nuevo);
+                    System.out.println("Usuario creado: " + user);
+                });
+    }
 
 }
