@@ -6,6 +6,7 @@ import com.example.demo.service.ProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
@@ -50,16 +51,16 @@ public class ProveedorApiController {
     @PostMapping
     public ResponseEntity<?> crearProveedor(@RequestBody Proveedor proveedor) {
         try {
-            return ResponseEntity.ok(proveedorService.guardarProveedor(proveedor));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(proveedorService.guardarProveedor(proveedor));
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Proveedor_duplicado"))
                 return ResponseEntity.status(409).body("Proveedor_duplicado");
-            if(e.getMessage().equals("NIT_duplicado"))
+            if (e.getMessage().equals("NIT_duplicado"))
                 return ResponseEntity.status(409).body("NIT_duplicado");
             return ResponseEntity.status(500).body("error");
         }
     }
-    
 
     @PutMapping("/{id}")
     public ResponseEntity<Proveedor> actualizarProveedor(@PathVariable String id, @RequestBody Proveedor proveedor) {
